@@ -7,40 +7,59 @@ public class EnemyController : MonoBehaviour
     public float speed;
     public bool vertical;
     public float changeTime = 3.0f;
+    public bool broken = true;
 
     Rigidbody2D rigidbody2D;
     float timer;
     int direction = 1;
+
+    Animator animator;
 
    
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         timer = changeTime;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         timer -= Time.deltaTime;
-
+         
+        if(broken)
+        {
+            return;
+        }
         if (timer < 0)
         {
+           
             direction = -direction;
             timer = changeTime;
         }
     }
     void FixedUpdate()
     {
+
+        if (broken)
+        {
+            return;
+        }
+    
         Vector2 position = rigidbody2D.position;
 
         if (vertical)
         {
-            position.y = position.y + Time.deltaTime * speed * direction; ;
+            position.y = position.y + Time.deltaTime * speed * direction;
+            animator.SetFloat("Move X", 0);
+            animator.SetFloat("Move Y", direction);
         }
         else
         {
-            position.x = position.x + Time.deltaTime * speed * direction; ;
+            position.x = position.x + Time.deltaTime * speed * direction;
+            animator.SetFloat("Move X", direction);
+            animator.SetFloat("Move Y", 0);
         }
 
         rigidbody2D.MovePosition(position);
@@ -51,7 +70,15 @@ public class EnemyController : MonoBehaviour
 
         if (player != null)
         {
+           
             player.ChangeHealth(-1);
         }
+    }
+    
+    public void Fix()
+    {
+        broken = false;
+        rigidbody2D.simulated = false;
+        animator.SetTrigger("Fixed");
     }
 }
