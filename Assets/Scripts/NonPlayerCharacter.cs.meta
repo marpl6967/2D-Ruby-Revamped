@@ -4,7 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - dialogBox: {fileID: 3535870077234342168, guid: c3ac176fcd48d99408cc63b712575690,
+  - dialogBox: {fileID: 7654951359070810998, guid: c0bcbdbfa4bae444f930df6c9eb791a9,
       type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
